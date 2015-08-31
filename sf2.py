@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-# æ¨è¾‰ä¸‰è§’
+# Ñî»ÔÈý½Ç
 def triangle(n):
     L=[1]
     while True:
         yield(L)
-# æœ«å°¾åŠ 0
+# Ä©Î²¼Ó0
         L.append(0)
-# L[-1]åˆšå¥½ä¹Ÿä¸º0
+# L[-1]¸ÕºÃÒ²Îª0
         L=[L[i]+L[i-1] for i in range(len(L))]
         if len(L)>n:
             break
@@ -15,3 +15,4 @@ def triangle(n):
 g=triangle(10)
 for i in g:
     print(i)
+

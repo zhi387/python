@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# æ±‰è¯ºå¡”a ç§»åˆ°c
+# ººÅµËþa ÒÆµ½c
 def move(n, a, b, c):
     if n == 1:
         print('move', a, '-->', c)
@@ -8,3 +8,4 @@ def move(n, a, b, c):
     move(1, a, b, c)
     move(n-1, b, a, c)
 move(3,'A','B','C')
+)
