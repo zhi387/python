@@ -12,7 +12,7 @@ class tbSpider:
         self.datas=[]
         self.mytool=htmlTool()
 
-    # 抓取数据
+    # 开启爬虫
     def startSpider(self):
         title,sumpage = self.getInfo()
         self.saveDate(title,sumpage)
