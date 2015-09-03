@@ -59,6 +59,7 @@ class tbSpider:
         if match:
             title = match.group(1)
         else:
+            title="untitle"
             print(u"找不到标题")
         return title
 
