@@ -3,6 +3,7 @@
 
 from Tkinter import *
 import sql.mssql
+import xlwt
 
 class sqlTool:
     def __init__(self):
@@ -15,11 +16,12 @@ class sqlTool:
     def show(self):
         self.addLinkMenu()
         self.addExpMenu()
-        self.addButton()
-        self.addSqlEntry()
+        self.addExecuteButton()
+        self.addText()
         self.win.mainloop()
         self.sqltext = None
         self.showtext = None
+        self.resList = None
         
     def addLinkMenu(self):
         cmdbutton1 = Menubutton(self.menubar, text="links",underline=0)
@@ -41,15 +43,15 @@ class sqlTool:
         cmdbutton2['menu'] = cmdbutton2.menu
         self.menubar.tk_menuBar(cmdbutton2)
 
-    def addSqlEntry(self):
+    def addText(self):
         self.sqltext = Text(self.win)
-        self.sqltext.pack(side=LEFT)
+        self.sqltext.pack(side=TOP)
         self.showtext = Text(self.win)
-        self.showtext.pack(side=LEFT)
+        self.showtext.pack(fill=X)
 
-    def addButton(self):
+    def addExecuteButton(self):
         exebutton = Button(self.win, text="execute", command = self.sqlExecute)
-        exebutton.pack(side=LEFT)
+        exebutton.pack(side=TOP)
         
     def mssql(self):
         print("mssql")
@@ -58,7 +60,12 @@ class sqlTool:
         print("mysql")
         
     def exp_xls(self):
-        print("exp_xls")
+        f = xlwt.Workbook(encoding="utf8")
+        sheet1 = f.add_sheet(u"sheet1",cell_overwrite_ok=True)
+        for i in range(0,len(self.resList)):
+            for j in range(0,len(self.resList[i])):
+                sheet1.write(i,j,self.resList[i][j])
+        f.save("exp_xls.xls")
          
     def exp_dbf(self):
         print("exp_dbf")
@@ -66,9 +73,12 @@ class sqlTool:
     def sqlExecute(self):
         text = (self.sqltext.get(1.0,END))
         ms = sql.mssql.MSSQL(host="localhost",user="sa",pwd="sasa",db="ks")
-        resList = ms.ExecQuery(text.encode("utf8"))
+        self.resList = ms.ExecQuery(text.encode("utf8"))
         self.showtext.delete(1.0,END)
-        self.showtext.insert(1.0,resList)
+        for a in self.resList:
+            self.showtext.insert(CURRENT,a)
+            self.showtext.insert(CURRENT,"\n")
 
 mytool = sqlTool()
 mytool.show()
+
